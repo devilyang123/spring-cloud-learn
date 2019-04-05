@@ -1,0 +1,35 @@
+server:
+  port: 8990
+spring:
+  application:
+    name: cloud-gateway
+eureka: #网关要从注册中心拉去服务列表
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8083/eureka/
+#zuul:
+#  routes:
+#    user: #路由ID，自己定义，唯一
+#      path: /cloud-consumer/**     #浏览器直接访问网关，它会按照这里设定的规则转发到下面的url,http://localhost:8990/cloud-producer/selectAll
+#      url: http://127.0.0.1:8082  #缺点：路径写死了，也不能做负载均衡
+#zuul:
+#  routes:
+#    cloud-consumer: #路由ID，自己定义，唯一
+#      path: /cloud-consumer/**     #浏览器直接访问网关，它会按照这里设定的规则转发到下面的服务ID
+#      serviceId: cloud-consumer
+#zuul:
+#  routes:
+#    cloud-consumer: /cloud-consumer/**  #key直接配服务的ID，value配 匹配网关的路径， zuul从注册中心可以拉去到所有的服务ID，默认会为每个服务ID配置如此的路由规则
+#zuul:
+#  ignored-services: #配置zuul忽略的服务id
+#    - cloud-producer
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000  #zull配置熔断的超时时长
+ribbon: #配置ribbon的超时时长
+  ConnectionTimeout: 500
+  ReadTimeout: 2000 #ribbon的超时时长一般要小于hystrix的超时时长
