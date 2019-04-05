@@ -1,0 +1,22 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: cloud-consumer # 应用名称，会在Eureka中显示
+eureka:
+  client:
+    service-url: # EurekaServer的地址，现在是自己的地址，如果是集群，需要加上其它Server的地址。
+      defaultZone: http://127.0.0.1:8083/eureka/
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 3000  #配置全局服务请求的超时时长
+feign:
+  hystrix:
+    enabled: true  #feign默认断路器是关闭的，这里设置为开启状态
+ribbon:
+  ConnectionTimeOut: 500  #feign的负载均衡配置连接超时时长
+  ReadTimeOut: 2000       #feign的负载均衡配置读取数据超时时长
